@@ -28,6 +28,8 @@ const mostrarPokemon = (datosPokemon, contenedorNum) => {
   <div class="card-body">
     <h5 class="card-title PK-name">${datosPokemon.name.toUpperCase()}</h5>
     <p class="card-text">id: ${datosPokemon.id}</p>
+    <p class="card-text">tipo: ${datosPokemon.types.map((type) => type.type.name)}</p>
+    
     <a href="#" class="btn btn-primary">añadir a mi equipo</a>
   </div>
 </div>
