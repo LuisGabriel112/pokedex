@@ -29,12 +29,13 @@ const mostrarPokemon = (datosPokemon, contenedorNum) => {
     <h5 class="card-title PK-name">${datosPokemon.name.toUpperCase()}</h5>
     <p class="card-text">id: ${datosPokemon.id}</p>
     <p class="card-text">tipo: ${datosPokemon.types.map((type) => type.type.name)}</p>
-    
+    <p></p>
     <a href="#" class="btn btn-primary">añadir a mi equipo</a>
   </div>
 </div>
     `;
 };
+
 
 const mostrarError = (contenedorNum, error) => {
     let infoDivId = `pokemonInfo${contenedorNum}`
