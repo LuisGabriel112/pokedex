@@ -2,7 +2,15 @@ body{
     background-repeat: no-repeat;
 }
 
-.card_one{
-    background: none;
-    margin: 10px, 0px, 0px,0px;
+#BuscarPok{
+    width: 220px;
+}
+
+.btn{
+    margin: 10px;
+}
+
+.container{
+    width: 100% !important;
+    
 }
