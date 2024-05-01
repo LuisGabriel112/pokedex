@@ -1,11 +1,10 @@
-let card_container = document.getElementById("card-container");
-const input = document.getElementById('BuscarPok');
-const btn = document.getElementById('btn-pok');
-
-const buscarPokemon = () => {
-  let nombre = document.getElementById('BuscarPok').value.trim().toLowerCase();
+// Buscar Pokémon
+const buscarPokemon = (contenedorNum) => {
+  let inputId = `pokemonInput${contenedorNum}`;
+  let nombre = document.getElementById(inputId).value.trim().toLowerCase();
   let urlApi = `https://pokeapi.co/api/v2/pokemon/${nombre}`;
 
+  // Manejo de errores
   fetch(urlApi)
     .then(respuesta => {
       if (!respuesta.ok) {
@@ -13,49 +12,47 @@ const buscarPokemon = () => {
       }
       return respuesta.json();
     })
-    .then(datosPokemon => {
-      mostrarPokemon(datosPokemon);
-      bucleCartas(datosPokemon);
-      
-    })};
+    .then(datosPokemon => mostrarPokemon(datosPokemon, contenedorNum))
+    .then(datosPokemon => generar_poks(datosPokemon))
+    .catch(error => mostrarError(contenedorNum, error)); // Llama a la función de manejo de errores
+};
 
-const mostrarPokemon = (datosPokemon) => {
-  
-  console.log(datosPokemon.name.toUpperCase());
+// Mostrar información (asumiendo que mostrarError está definida en otro lugar)
+const mostrarPokemon = (datosPokemon, contenedorNum) => {
+  let infoDivId = `pokemonInfo${contenedorNum}`;
+  let infoDiv = document.getElementById(infoDivId);
 
-  card_container.innerHTML = `
-  <div class="col-md-3 mb-4"> <!-- Cada tarjeta ocupa 3 columnas en pantallas medianas y se deja un margen inferior -->
-  <div class="card">
-    <img src="${datosPokemon.sprites.front_default}" class="card-img-top" alt="${datosPokemon.name}">
-    <div class="card-body">
-      <h5 class="card-title">${datosPokemon.name}</h5>
-      <p class="card-text">Tipo: ${datosPokemon.types[0].type.name}</p>
-      <a href="#" class="btn btn-primary">Más detalles</a>
-    </div>
+  infoDiv.innerHTML = `
+    
+    <div class="card" style="width: 18rem;">
+  <img class = "PK-img" src="${datosPokemon.sprites.other["official-artwork"].front_default}" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title PK-name">${datosPokemon.name.toUpperCase()}</h5>
+    <p class="card-text">id: ${datosPokemon.id}</p>
+    <p class="card-text">tipo: ${datosPokemon.types.map((type) => type.type.name)}</p>
+    <p></p>
+    <a href="#" class="btn btn-primary">añadir a mi equipo</a>
   </div>
 </div>
-  `
-};
-
-const bucleCartas = (datosPokemon) => {
-  let html = '';
-  for (let i = 0; i < 12; i++) {
-    html += `
-    <div class="col-md-3 mb-4"> <!-- Cada tarjeta ocupa 3 columnas en pantallas medianas y se deja un margen inferior -->
-      <div class="card">
-        <img src="${datosPokemon.sprites.front_default}" class="card-img-top" alt="${datosPokemon.name}">
-        <div class="card-body">
-          <h5 class="card-title">${datosPokemon.name}</h5>
-          <p class="card-text">Tipo: ${datosPokemon.types[0].type.name}</p>
-          <a href="#" class="btn btn-primary">Más detalles</a>
-        </div>
-      </div>
-    </div>
     `;
-  }
-  card_container.innerHTML += html;
 };
 
-btn.addEventListener('click', buscarPokemon); // Pasar la función buscarPokemon como callback al event listener
 
-window.addEventListener('load', buscarPokemon);
+const mostrarError = (contenedorNum, error) => {
+    let infoDivId = `pokemonInfo${contenedorNum}`
+    let infoDiv = document.getElementById(infoDivId)
+    infoDiv.innerHTML= "No se encontró el Pokémon con ese nombre."
+}
+
+const idAleatorio = () =>{
+  let aleatorioInt = Math.floor(Math.random()* 1008)
+
+  let i = 0
+  while (i <= 12) {
+    i++
+    aleatorioInt
+    console.log(aleatorioInt);
+  }
+} 
+
+idAleatorio()
